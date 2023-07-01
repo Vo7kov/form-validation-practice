@@ -1,27 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import './App.scss';
 
-interface Props {
-  onClick: () => void;
-}
+import postsFromServer from './api/posts';
 
-export const Provider: React.FC<Props> = React.memo(
-  ({ onClick, children }) => (
-    <button
-      type="button"
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  ),
-);
+import { Post } from './types/Post';
+
+import { PostForm } from './components/PostForm/PostForm';
+import { PostList } from './components/PostList/PostList';
+
+import { getUser } from './services/user';
+
+const initialPosts: Post[] = postsFromServer.map(post => ({
+  ...post,
+  user: getUser(post.userId),
+}));
 
 export const App: React.FC = () => {
+  const [renderedPosts, setRenderedPosts] = useState<Post[]>(initialPosts);
+
   return (
-    <div className="starter">
-      <Provider onClick={() => ({})}>
-        <TodoList />
-      </Provider>
+    <div className="section">
+      <h1 className="title">
+        Create a post
+      </h1>
+
+      <PostForm
+        onSubmit={(post: Post) => setRenderedPosts([...renderedPosts, post])}
+        length={renderedPosts.length}
+      />
+
+      <PostList
+        posts={renderedPosts}
+      />
     </div>
   );
 };
