@@ -1,0 +1,65 @@
+@import "../../styles/variables.scss";
+
+.form {
+  width: 500px;
+
+  &__label {
+
+    &:not(:first-of-type) {
+      display: block;
+      margin-top: 16px;
+    }
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    outline: none;
+    border-bottom: 2px solid $main;
+
+    font-size: 20px;
+
+    &::placeholder {
+      font-family: inherit;
+      color: $placeholder;
+    }
+  }
+
+  &__input-error {
+    color: $main;
+  }
+
+  &__button {
+    padding: 16px;
+    margin-top: 30px;
+
+    width: 100%;
+
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+
+    background-color: $main;
+
+    border: 2px solid transparent;
+    outline: none;
+
+    cursor: pointer;
+
+    transition: all 0.3s;
+
+    &:hover {
+      border-color: $main;
+      background-color: transparent;
+      color: black;
+    }
+  }
+
+  &__success {
+    display: block;
+    margin-top: 24px;
+  }
+}
