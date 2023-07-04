@@ -7,24 +7,25 @@
 
     &:not(:first-of-type) {
       display: block;
-      margin-top: 16px;
+      margin-top: $defaultMargin;
     }
   }
 
   &__input {
     display: block;
     width: 100%;
-    padding: 12px;
+    padding: $defaultPadding;
 
     border: none;
     outline: none;
-    border-bottom: 2px solid $main;
+    border-bottom: $defaultBorder;
 
-    font-size: 20px;
+    font-size: $defaultFontSize;
 
     &::placeholder {
       font-family: inherit;
       color: $placeholder;
+      opacity: 1;
     }
   }
 
@@ -38,23 +39,23 @@
 
     width: 100%;
 
-    color: white;
-    font-size: 18px;
+    color: $white;
+    font-size: $defaultFontSize;
     font-weight: 500;
 
     background-color: $main;
 
-    border: 2px solid transparent;
+    border: $defaultBorderWidth solid transparent;
     outline: none;
 
     cursor: pointer;
 
-    transition: all 0.3s;
+    transition: all $animationDuration;
 
     &:hover {
       border-color: $main;
       background-color: transparent;
-      color: black;
+      color: $black;
     }
   }
 

@@ -3,7 +3,17 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
+import { Dropdown } from '../Dropdown/Dropdown';
+
 import './Form.scss';
+
+const countries = [
+  'USA',
+  'Germany',
+  'Poland',
+  'Ukraine',
+  'Estonia',
+];
 
 type Inputs = {
   firstName: string,
@@ -12,7 +22,7 @@ type Inputs = {
   address: string,
   zipCode: string,
   phone: string,
-  country: { value: string; label: string } | null,
+  country: string,
 };
 
 export const Form: React.FC = () => {
@@ -22,6 +32,7 @@ export const Form: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = () => setIsSuccess(true);
 
@@ -209,6 +220,28 @@ export const Form: React.FC = () => {
                 value: /^\d{3}-\d{4}$/,
                 message: 'Phone number did not match required format: 000-0000',
               },
+            })}
+          />
+        </label>
+
+        <label htmlFor="country" className="form__label">
+          {errors.country && errors.country.type === 'required' && (
+            <p className="form__input-error">
+              Country is required
+            </p>
+          )}
+
+          <Dropdown
+            options={countries}
+            onChange={(item: string) => setValue('country', item)}
+          />
+
+          <input
+            className="form__input"
+            id="country"
+            tabIndex={-1}
+            {...register('country', {
+              required: 'required',
             })}
           />
         </label>

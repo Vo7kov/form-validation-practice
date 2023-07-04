@@ -1,2 +1,14 @@
-$placeholder: #6d6d6d;
+$placeholder: #a0a0a0;
 $main: #be1427;
+$black: #000;
+$white: #fff;
+
+$defaultMargin: 16px;
+$defaultPadding: 12px;
+$defaultFontSize: 20px;
+
+$defaultBorderWidth: 2px;
+$defaultBorder: $defaultBorderWidth solid $main;
+
+$zIndexMain: 2;
+$animationDuration: 0.3s;
