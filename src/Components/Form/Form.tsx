@@ -7,26 +7,26 @@ import { Dropdown } from '../Dropdown/Dropdown';
 
 import './Form.scss';
 
-const countries = [
-  'USA',
-  'Germany',
-  'Poland',
-  'Ukraine',
-  'Estonia',
-];
+const countries: { [key: string]: string[] } = {
+  USA: ['New York', 'Los Angeles'],
+  Estonia: ['Johvi', 'Tallinn'],
+  Ukraine: ['Kyiv', 'Dnipro'],
+};
 
 type Inputs = {
   firstName: string,
   lastName: string,
   email: string,
+  country: string,
+  city: string,
   address: string,
   zipCode: string,
   phone: string,
-  country: string,
 };
 
 export const Form: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState('');
 
   const {
     register,
@@ -34,7 +34,28 @@ export const Form: React.FC = () => {
     formState: { errors },
     setValue,
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = () => setIsSuccess(true);
+  const handleCountryChange = (item: string) => {
+    setSelectedCountry(item);
+    setValue('country', item, { shouldValidate: true });
+    setValue('city', '', { shouldValidate: true });
+  };
+
+  const onReset = () => {
+    setValue('firstName', '');
+    setValue('lastName', '');
+    setValue('email', '');
+    setValue('country', '');
+    setValue('city', '');
+    setValue('address', '');
+    setValue('zipCode', '');
+    setValue('phone', '');
+    setSelectedCountry('');
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = () => {
+    setIsSuccess(true);
+    onReset();
+  };
 
   return (
     <>
@@ -74,7 +95,7 @@ export const Form: React.FC = () => {
         <label className="form__label" htmlFor="lastName">
           {errors.lastName && errors.lastName.type === 'required' && (
             <p className="form__input-error">
-              First name is required
+              Last name is required
             </p>
           )}
 
@@ -130,6 +151,52 @@ export const Form: React.FC = () => {
               validate: {
                 containsRussianLetters: value => !/[\u0400-\u04FF]/.test(value),
               },
+            })}
+          />
+        </label>
+
+        <label htmlFor="country" className="form__label">
+          {errors.country && errors.country.type === 'required' && (
+            <p className="form__input-error">
+              Country is required
+            </p>
+          )}
+
+          <Dropdown
+            options={Object.keys(countries)}
+            placeholder="Select country"
+            onChange={handleCountryChange}
+          />
+
+          <input
+            className="form__input form__input--hidden"
+            id="country"
+            {...register('country', {
+              required: 'required',
+            })}
+            onChange={(event) => setSelectedCountry(event.target.value)}
+          />
+        </label>
+
+        <label htmlFor="city" className="form__label">
+          {errors.city && errors.city.type === 'required' && (
+            <p className="form__input-error">
+              City is required
+            </p>
+          )}
+
+          <Dropdown
+            disabled={!selectedCountry}
+            options={countries[selectedCountry]}
+            placeholder="Select city"
+            onChange={(item: string) => setValue('city', item, { shouldValidate: true })}
+          />
+
+          <input
+            className="form__input form__input--hidden"
+            id="city"
+            {...register('city', {
+              required: 'required',
             })}
           />
         </label>
@@ -220,28 +287,6 @@ export const Form: React.FC = () => {
                 value: /^\d{3}-\d{4}$/,
                 message: 'Phone number did not match required format: 000-0000',
               },
-            })}
-          />
-        </label>
-
-        <label htmlFor="country" className="form__label">
-          {errors.country && errors.country.type === 'required' && (
-            <p className="form__input-error">
-              Country is required
-            </p>
-          )}
-
-          <Dropdown
-            options={countries}
-            onChange={(item: string) => setValue('country', item)}
-          />
-
-          <input
-            className="form__input"
-            id="country"
-            tabIndex={-1}
-            {...register('country', {
-              required: 'required',
             })}
           />
         </label>

@@ -1,30 +1,68 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 type Props = {
-  isSelected: boolean;
-  setOpen: (param: any) => void;
-  value: string;
-  el: any,
+  isSelected: boolean,
+  value: string,
+  placeholder: string,
+  disabled: boolean,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const DropdownButton: React.FC<Props> = ({
   isSelected,
-  setOpen,
   value,
-  el,
-}) => (
-  <button
-    ref={el}
-    type="button"
-    className={classNames(
-      'dropdown__button',
-      {
+  placeholder,
+  disabled,
+  setOpen,
+}) => {
+  const dropdownRef = useRef<HTMLButtonElement>(null);
+  const [isDropdownFocused, setDropdownFocused] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [setOpen]);
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      if (!isDropdownFocused) {
+        setOpen(false);
+      }
+    }, 100);
+  };
+
+  return (
+    <button
+      ref={dropdownRef}
+      type="button"
+      className={classNames('dropdown__button', {
         'dropdown__button--selected': isSelected,
-      },
-    )}
-    onClick={() => setOpen((prevOpen: boolean) => !prevOpen)}
-  >
-    {value.length === 0 ? 'Select country' : value}
-  </button>
-);
+        'dropdown__button--disabled': disabled,
+      })}
+      onClick={() => setOpen((prevOpen: boolean) => !prevOpen)}
+      onBlur={handleBlur}
+      onFocus={() => setDropdownFocused(true)}
+      disabled={disabled}
+    >
+      {value.length === 0 ? placeholder : value}
+    </button>
+  );
+};

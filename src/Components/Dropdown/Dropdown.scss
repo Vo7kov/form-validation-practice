@@ -47,6 +47,10 @@
     &--selected {
       color: $black;
     }
+
+    &--disabled {
+      cursor: not-allowed;
+    }
   }
 
   &__list {

@@ -28,11 +28,13 @@ export const DropdownList: React.FC<Props> = ({
     onChange(item);
   };
 
+  const sortedOptions = options.sort((a: string, b: string) => a.localeCompare(b));
+
   return (
     <ul
       className="dropdown__list"
     >
-      {options.map((option: string) => (
+      {sortedOptions.map((option: string) => (
         <li
           key={option}
           className="dropdown__list-item"

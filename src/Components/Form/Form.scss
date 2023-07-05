@@ -27,6 +27,12 @@
       color: $placeholder;
       opacity: 1;
     }
+
+    &--hidden {
+      visibility: hidden;
+      position: absolute;
+      left: -9999px;
+    }
   }
 
   &__input-error {
