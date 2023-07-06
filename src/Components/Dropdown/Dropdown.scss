@@ -27,10 +27,8 @@
 
     &::after {
       position: absolute;
-      top: 50%;
+      bottom: 20%;
       right: 16px;
-
-      transform: translateY(-50%);
 
       display: block;
       content: "";
