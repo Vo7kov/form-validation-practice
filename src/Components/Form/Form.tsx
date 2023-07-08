@@ -33,6 +33,7 @@ export const Form: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<Inputs>();
   const handleCountryChange = (item: string) => {
     setSelectedCountry(item);
@@ -166,6 +167,7 @@ export const Form: React.FC = () => {
             options={Object.keys(countries)}
             placeholder="Select country"
             onChange={handleCountryChange}
+            defaultValue={watch().country}
           />
 
           <input
@@ -189,6 +191,7 @@ export const Form: React.FC = () => {
             disabled={!selectedCountry}
             options={countries[selectedCountry]}
             placeholder="Select city"
+            defaultValue={watch().city}
             onChange={(item: string) => setValue('city', item, { shouldValidate: true })}
           />
 
