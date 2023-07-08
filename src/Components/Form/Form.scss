@@ -1,0 +1,73 @@
+@import "../../styles/variables.scss";
+
+.form {
+  width: 500px;
+
+  &__label {
+    display: block;
+    position: relative;
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    padding: $defaultPadding;
+
+    border: none;
+    outline: none;
+    border-bottom: $defaultBorder;
+
+    font-size: $defaultFontSize;
+
+    &::placeholder {
+      font-family: inherit;
+      color: $placeholder;
+      opacity: 1;
+    }
+
+    &--hidden {
+      visibility: hidden;
+      position: absolute;
+      left: -9999px;
+    }
+  }
+
+  &__input-error {
+    position: absolute;
+    top: 8px;
+
+    font-size: 16px;
+    color: $main;
+  }
+
+  &__button {
+    padding: 16px;
+    margin-top: 30px;
+
+    width: 100%;
+
+    color: $white;
+    font-size: $defaultFontSize;
+    font-weight: 500;
+
+    background-color: $main;
+
+    border: $defaultBorderWidth solid transparent;
+    outline: none;
+
+    cursor: pointer;
+
+    transition: all $animationDuration;
+
+    &:hover {
+      border-color: $main;
+      background-color: transparent;
+      color: $black;
+    }
+  }
+
+  &__success {
+    display: block;
+    margin-top: 24px;
+  }
+}

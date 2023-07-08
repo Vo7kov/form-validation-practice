@@ -1,0 +1,89 @@
+@import "../../styles/variables.scss";
+
+.dropdown {
+  position: relative;
+  top: 30%;
+
+  min-width: 500px;
+
+  &__button {
+    position: relative;
+
+    padding: $defaultPadding;
+    width: 100%;
+
+    background: none;
+    border: none;
+
+    border-bottom: $defaultBorder;
+    color: $placeholder;
+
+    font-weight: 500;
+
+    font-size: $defaultFontSize;
+    text-align: left;
+
+    cursor: pointer;
+
+    &::after {
+      position: absolute;
+      bottom: 20%;
+      right: 16px;
+
+      display: block;
+      content: "";
+
+      width: 12px;
+      height: 12px;
+
+      background-image: url("../../images/dropdownAfter.svg");
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    &--selected {
+      color: $black;
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__list {
+    position: absolute;
+
+    width: 100%;
+    margin-top: 20px;
+
+    background-color: $white;
+
+    border: $defaultBorder;
+    border-top: none;
+
+    z-index: $zIndexMain;
+  }
+
+  &__list-item {
+    padding: 8px 12px;
+
+    list-style: none;
+    cursor: pointer;
+
+    font-size: $defaultFontSize;
+  }
+
+  &__list-item-link {
+    display: block;
+    width: 100%;
+
+    text-decoration: none;
+    color: $black;
+    transition: color $animationDuration;
+
+    &:hover {
+      color: $main;
+    }
+  }
+}
